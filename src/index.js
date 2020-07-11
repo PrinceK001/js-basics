@@ -2,43 +2,55 @@ import './styles.css';
 
 const THROTTLE = "throttle";
 const DEBOUNCE = "debounce";
-let throttleVal, debounceVal;
+const inputs = { throttle: "", debounce: "" };
+const timers = { throttle: false, debounce: false };
+const callsCount = { throttle: 0, debounce: 0 };
+const outputElemRefs = {
+    throttle: document.getElementById("throttleOutput"),
+    debounce: document.getElementById("debounceOutput")
+}
+const callsElemRefs = {
+    throttle: document.getElementById("throttleCalls"),
+    debounce: document.getElementById("debounceCalls")
+}
 
-const throttleOutputEle = document.getElementById("throttleOutput");
-const debounceOutputEle = document.getElementById("debounceOutput");
-
-const reverseString = ({ data, type }) => {
+const reverseString = ({ inputText, type }) => {
     let url = "";
-    // url = `http://localhost:8000/reversestring?data=${data}`; //comment for production
-    window.fetch(url || `/reversestring?data=${data}`).then(response => response.json()).then(({ data }) => {
-        if (data) {
-            updateScreen({ data, type });
-        }
+    // url = `http://localhost:8000/reversestring?data=${inputText}`; //comment for production
+    window.fetch(url || `/reversestring?data=${inputText}`).then(response => response.json()).then(({ data }) => {
+        outputElemRefs[type].textContent = data;
+        callsElemRefs[type].textContent = callsCount[type];
     });
 }
 
-const updateScreen = ({ data, type }) => {
-    switch (type) {
-        case THROTTLE: throttleOutputEle && (throttleOutputEle.textContent = data); break;
-        case DEBOUNCE: debounceOutputEle && (debounceOutputEle.textContent = data); break;
-        default: { console.log("pass a valid type") }
+const debounce = ({ inputText, delay }) => {
+    clearTimeout(timers[DEBOUNCE]);
+    timers[DEBOUNCE] = setTimeout(() => {
+        callsCount[DEBOUNCE]++;
+        reverseString({ inputText, type: DEBOUNCE });
+    }, delay);
+}
+
+const throttle = ({ inputText, delay }) => {
+    if (!timers[THROTTLE]) {
+        callsCount[THROTTLE]++;
+        reverseString({ inputText, type: THROTTLE });
+        timers[THROTTLE] = true;
+        setTimeout(() => {
+            timers[THROTTLE] = false;
+        }, delay);
     }
 }
 
 const inputEventHandler = (event, type) => {
-    const data = event.target.value.trim();
-    if (data && (data.length > 1)) {
-        if ((type === THROTTLE) && (data !== throttleVal)) {
-            throttleVal = data;
-            reverseString({ data, type });
-            // throttle call
-        } else if ((type === DEBOUNCE) && (data !== debounceVal)) {
-            debounceVal = data;
-            reverseString({ data, type });
-            // debounce call
+    const inputText = event.target.value.trim();
+    if (inputText !== inputs[type]) {
+        inputs[type] = inputText;
+        if (type === THROTTLE) {
+            throttle({ inputText, delay: 1000 });
+        } else if (type === DEBOUNCE) {
+            debounce({ inputText, delay: 1000 });
         }
-    } else {
-        updateScreen({ data, type });
     }
 }
 
