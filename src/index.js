@@ -1,5 +1,12 @@
 import './styles.css';
 
+const THROTTLE = "throttle";
+const DEBOUNCE = "debounce";
+let throttleVal, debounceVal;
+
+const throttleOutputEle = document.getElementById("throttleOutput");
+const debounceOutputEle = document.getElementById("debounceOutput");
+
 const reverseString = ({ data, type }) => {
     let url = "";
     // url = `http://localhost:8000/reversestring?data=${data}`; //comment for production
@@ -12,43 +19,28 @@ const reverseString = ({ data, type }) => {
 
 const updateScreen = ({ data, type }) => {
     switch (type) {
-        case "throttle": throttleOutput && (throttleOutput.textContent = data); break;
-        case "debounce": debounceOutput && (debounceOutput.textContent = data); break;
+        case THROTTLE: throttleOutputEle && (throttleOutputEle.textContent = data); break;
+        case DEBOUNCE: debounceOutputEle && (debounceOutputEle.textContent = data); break;
         default: { console.log("pass a valid type") }
     }
 }
 
-const inputEventHandler = eventData => {
-    const type = eventData.target.dataset.type;
-    let data = event.target.value;
+const inputEventHandler = (event, type) => {
+    const data = event.target.value.trim();
     if (data && (data.length > 1)) {
-        data = data.trim();
-        if ((type === THROTTLE) && (data !== window.currThrottleVal)) {
-            window.currThrottleVal = data;
-            reverseString({data, type});
+        if ((type === THROTTLE) && (data !== throttleVal)) {
+            throttleVal = data;
+            reverseString({ data, type });
             // throttle call
-        } else if ((type === DEBOUNCE) && (data !== window.currDebounceVal)) {
-            window.currDebounceVal = data;
-            reverseString({data, type});
+        } else if ((type === DEBOUNCE) && (data !== debounceVal)) {
+            debounceVal = data;
+            reverseString({ data, type });
             // debounce call
         }
     } else {
-        updateScreen({data, type})
+        updateScreen({ data, type });
     }
 }
 
-// Input elements
-const throttleInput = document.getElementById("throttleInput");
-const debounceInput = document.getElementById("debounceInput");
-
-// Ouput elements
-const throttleOutput = document.getElementById("throttleOutput");
-const debounceOutput = document.getElementById("debounceOutput");
-
-// Input Listeners
-throttleInput && throttleInput.addEventListener("keyup", inputEventHandler);
-debounceInput && debounceInput.addEventListener("keyup", inputEventHandler);
-
-// other declarations 
-const THROTTLE = "throttle";
-const DEBOUNCE = "debounce";
+// app exports
+window.app = { inputEventHandler };

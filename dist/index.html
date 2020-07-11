@@ -16,8 +16,8 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-2">Throttling</div>
-                    <div class="col-md-4"><input type="text" class="input-text" id="throttleInput" data-type="throttle"></div>
-                    <div class="col-md-6">Output :  <span id="throttleOutput"></span></div>
+                    <div class="col-md-4"><input type="text" class="input-text" onkeyup="app.inputEventHandler(event, 'throttle')"></div>
+                    <div class="col-md-6">Output : <span id="throttleOutput"></span></div>
                 </div>
             </div>
         </div>
@@ -25,7 +25,8 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-2">Debouncing</div>
-                    <div class="col-md-4"><input type="text" class="input-text" id="debounceInput" data-type="debounce"></div>
+                    <div class="col-md-4"><input type="text" class="input-text" onkeyup="app.inputEventHandler(event, 'debounce')">
+                    </div>
                     <div class="col-md-6">Output : <span id="debounceOutput"></span></div>
                 </div>
             </div>
