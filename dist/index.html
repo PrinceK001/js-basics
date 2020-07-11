@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Performance</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container-fluid p-4">
+        <h4 class="text-center blue-theme">Reverse a String</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-2">Throttling</div>
+                    <div class="col-md-4"><input type="text" class="input-text" id="throttleInput" data-type="throttle"></div>
+                    <div class="col-md-6">Output :  <span id="throttleOutput"></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-2">Debouncing</div>
+                    <div class="col-md-4"><input type="text" class="input-text" id="debounceInput" data-type="debounce"></div>
+                    <div class="col-md-6">Output : <span id="debounceOutput"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="bundle.js"></script>
+</body>
+
+</html>

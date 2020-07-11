@@ -1,0 +1,33 @@
+{
+  "name": "js-basics",
+  "version": "1.0.0",
+  "description": "JS - Basics",
+  "author": "Prince Kaushal Tripathi",
+  "license": "MIT",
+  "engines": {
+    "node": "12.x.x",
+    "npm": "^6.x.x"
+  },
+  "private": true,
+  "scripts": {
+    "start:client": "webpack-dev-server --open",
+    "start:server": "nodemon server.js",
+    "start": "node server.js",
+    "build": "webpack"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "core-js": "^2.5.4",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "css-loader": "^3.6.0",
+    "nodemon": "^2.0.4",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
